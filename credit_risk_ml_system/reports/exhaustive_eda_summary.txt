@@ -1,0 +1,50 @@
+EXHAUSTIVE HMEQ EDA REPORT
+==================================================
+
+1. MISSING VALUE ANALYSIS
+------------------------------
+         Missing  Percentage
+target         0    0.000000
+LOAN           0    0.000000
+MORTDUE      518    8.691275
+VALUE        112    1.879195
+REASON       252    4.228188
+JOB          279    4.681208
+YOJ          515    8.640940
+DEROG        708   11.879195
+DELINQ       580    9.731544
+CLAGE        308    5.167785
+NINQ         510    8.557047
+CLNO         222    3.724832
+DEBTINC     1267   21.258389
+
+2. DESCRIPTIVE STATISTICS (BY TARGET)
+------------------------------
+target                  0             1
+LOAN         19028.107315  16922.119428
+MORTDUE      74829.249055  69460.452973
+VALUE       102595.921018  98172.846227
+YOJ              9.154941      8.027802
+DEROG            0.134217      0.707804
+DELINQ           0.245133      1.229185
+CLAGE          187.002355    150.190183
+NINQ             1.032749      1.782765
+CLNO            21.317036     21.211268
+DEBTINC         33.253129     39.387645
+COLLATERAL   31590.275926  29684.262265
+L_C_RATIO        0.723931      0.733847
+L_P_RATIO        0.219913      0.202021
+C_P_RATIO        0.288465      0.304789
+
+3. SKEWNESS & KURTOSIS (UNIVARIATE)
+------------------------------
+LOAN - Skew: 2.02, Kurtosis: 6.93
+VALUE - Skew: 3.05, Kurtosis: 24.36
+DEBTINC - Skew: 2.85, Kurtosis: 50.50
+CLAGE - Skew: 1.34, Kurtosis: 7.60
+
+4. INSIGHTS ON RATIOS
+------------------------------
+Avg LTV (Paid): 21.99%
+Avg LTV (Default): 20.20%
+Avg Collateral-to-Property: 29.15%

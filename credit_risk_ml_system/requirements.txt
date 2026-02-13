@@ -1,0 +1,10 @@
+pandas
+numpy
+scikit-learn
+mlflow
+shap
+xgboost
+flask
+joblib
+scipy
+pyyaml

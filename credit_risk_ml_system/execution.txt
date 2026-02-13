@@ -1,0 +1,17 @@
+## To execute the entire code : 
+
+##############################################
+# BUILDING THE MODEL and SAVING it somewhere #
+##############################################
+
+1. change the directory to project directory
+2. cd credit_risk_ml_system
+3. python main.py # alternatively master_pipeline.py file also exists
+
+
+######################################
+# RUNNING THE APPLICATION USING FLASK#
+#####################################3
+1. change the directory to project directory
+2. cd credit_risk_ml_system
+3. python app.py # alternatively app.py file also exists

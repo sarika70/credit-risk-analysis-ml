@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>HMEQ Risk Engine</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-50 p-10 font-sans">
+    <div class="max-w-3xl mx-auto bg-white p-10 rounded-2xl shadow-xl border border-slate-200">
+        <h1 class="text-3xl font-black mb-2 text-slate-800">HMEQ Risk Engine</h1>
+        <p class="text-slate-500 mb-8 italic">Probability of Default (PD) Estimation for Home Equity Loans</p>
+        
+        <div class="grid grid-cols-2 gap-6 mb-8">
+            <div class="space-y-1">
+                <label class="text-xs font-bold text-slate-400 uppercase">Loan Amount Requested</label>
+                <input id="LOAN" type="number" value="20000" class="w-full border-2 border-slate-100 p-3 rounded-xl focus:border-blue-500 outline-none transition">
+            </div>
+            <div class="space-y-1">
+                <label class="text-xs font-bold text-slate-400 uppercase">Current Property Value</label>
+                <input id="VALUE" type="number" value="80000" class="w-full border-2 border-slate-100 p-3 rounded-xl focus:border-blue-500 outline-none transition">
+            </div>
+            <div class="space-y-1">
+                <label class="text-xs font-bold text-slate-400 uppercase">Mortgage Due</label>
+                <input id="MORTDUE" type="number" value="50000" class="w-full border-2 border-slate-100 p-3 rounded-xl focus:border-blue-500 outline-none transition">
+            </div>
+            <div class="space-y-1">
+                <label class="text-xs font-bold text-slate-400 uppercase">Debt-to-Income Ratio</label>
+                <input id="DEBTINC" type="number" value="33" class="w-full border-2 border-slate-100 p-3 rounded-xl focus:border-blue-500 outline-none transition">
+            </div>
+            <div class="space-y-1">
+                <label class="text-xs font-bold text-slate-400 uppercase">Job Category</label>
+                <select id="JOB" class="w-full border-2 border-slate-100 p-3 rounded-xl focus:border-blue-500 outline-none transition">
+                    <option value="Other">Other</option>
+                    <option value="Office">Office</option>
+                    <option value="Sales">Sales</option>
+                    <option value="Mgr">Manager</option>
+                    <option value="ProfExe">Professional</option>
+                </select>
+            </div>
+            <div class="space-y-1">
+                <label class="text-xs font-bold text-slate-400 uppercase">Derogatory Marks</label>
+                <input id="DEROG" type="number" value="0" class="w-full border-2 border-slate-100 p-3 rounded-xl focus:border-blue-500 outline-none transition">
+            </div>
+        </div>
+
+        <button onclick="predict()" class="w-full bg-blue-600 hover:bg-blue-700 text-white p-4 rounded-xl font-bold text-lg shadow-lg shadow-blue-200 transition transform active:scale-95">
+            Run Risk Assessment
+        </button>
+        
+        <div id="result" class="mt-10 hidden p-8 border-2 border-dashed border-slate-200 rounded-2xl bg-slate-50 text-center animate-pulse">
+            <p class="text-slate-400 uppercase text-xs font-bold tracking-widest mb-2">Calculated Probability of Default</p>
+            <h2 id="pd" class="text-6xl font-black text-slate-800">--</h2>
+            <div id="band" class="mt-4 font-black inline-block px-6 py-2 rounded-full text-sm uppercase">--</div>
+            <div class="mt-6 pt-6 border-t border-slate-200">
+                <p id="exp" class="text-sm text-slate-600 leading-relaxed"></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function predict() {
+            const data = {
+                LOAN: parseFloat(document.getElementById('LOAN').value),
+                MORTDUE: parseFloat(document.getElementById('MORTDUE').value),
+                VALUE: parseFloat(document.getElementById('VALUE').value),
+                DEBTINC: parseFloat(document.getElementById('DEBTINC').value),
+                DEROG: parseFloat(document.getElementById('DEROG').value),
+                JOB: document.getElementById('JOB').value,
+                REASON: 'DebtCon',
+                YOJ: 5,
+                CLAGE: 100,
+                NINQ: 1,
+                CLNO: 20,
+                DELINQ: 0
+            };
+
+            const btn = document.querySelector('button');
+            btn.innerText = "Analyzing Risk...";
+            
+            try {
+                const res = await fetch('/predict', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(data)
+                });
+                const out = await res.json();
+                
+                document.getElementById('result').classList.remove('hidden', 'animate-pulse');
+                document.getElementById('pd').innerText = (out.probability_of_default * 100).toFixed(2) + '%';
+                document.getElementById('band').innerText = out.risk_band + ' Risk';
+                document.getElementById('exp').innerText = out.explanation;
+                
+                const bandEl = document.getElementById('band');
+                if(out.risk_band === 'High') {
+                    bandEl.className = "mt-4 font-black inline-block px-6 py-2 rounded-full text-sm uppercase bg-red-100 text-red-600";
+                } else if(out.risk_band === 'Medium') {
+                    bandEl.className = "mt-4 font-black inline-block px-6 py-2 rounded-full text-sm uppercase bg-orange-100 text-orange-600";
+                } else {
+                    bandEl.className = "mt-4 font-black inline-block px-6 py-2 rounded-full text-sm uppercase bg-green-100 text-green-600";
+                }
+            } catch (e) {
+                alert("Ensure Flask is running!");
+            } finally {
+                btn.innerText = "Run Risk Assessment";
+            }
+        }
+    </script>
+</body>
+</html>

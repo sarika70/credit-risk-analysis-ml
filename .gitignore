@@ -1,0 +1,30 @@
+# Python cache
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Spyder project files
+.spyproject/
+
+# Environments
+.env
+venv/
+*.env
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Logs and outputs
+logs/
+*.log
+*.csv
+*.pkl
+
+# MLflow runs and models
+mlruns/
+artifacts/
+
+# IDE files
+.vscode/
+.idea/

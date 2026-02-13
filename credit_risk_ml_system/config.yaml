@@ -1,0 +1,17 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Sun Jan 18 13:35:23 2026
+
+@author: mjayant
+"""
+
+project_name: "credit-risk-ml-system"
+mlflow:
+  experiment_name: "Credit_Risk_Production"
+  tracking_uri: "mlruns"
+thresholds:
+  high_risk: 0.7
+  medium_risk: 0.3
+paths:
+  model_path: "artifacts/credit_risk_pipeline.pkl"
+  reference_data: "data/processed/training_reference.csv"

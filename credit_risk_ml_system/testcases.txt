@@ -1,0 +1,102 @@
+
+
+########################
+##### HIGH RISK  #######
+########################
+{
+  "LOAN": 30000,
+  "MORTDUE": 50000,
+  "VALUE": 70000,
+  "REASON": "DebtCon",
+  "JOB": "Sales",
+  "YOJ": 1,
+  "DEROG": 2,
+  "DELINQ": 2,
+  "CLAGE": 50,
+  "NINQ": 4,
+  "CLNO": 10,
+  "DEBTINC": 52,
+  "COLLATERAL": 20000,
+  "L_P_RATIO": 0.428,
+  "L_C_RATIO": 1.5,
+  "C_P_RATIO": 0.285,
+  "HIGH_DEBTINC_FLAG": 1,
+  "HAS_DEROG": 1
+}
+
+
+########################
+##### MEDIUM RISK  #####
+########################
+
+{
+  "LOAN": 15000,
+  "MORTDUE": 80000,
+  "VALUE": 120000,
+  "REASON": "HomeImp",
+  "JOB": "Mgr",
+  "YOJ": 5,
+  "DEROG": 0,
+  "DELINQ": 1,
+  "CLAGE": 180,
+  "NINQ": 2,
+  "CLNO": 22,
+  "DEBTINC": 34,
+  "COLLATERAL": 40000,
+  "L_P_RATIO": 0.125,
+  "L_C_RATIO": 0.375,
+  "C_P_RATIO": 0.333,
+  "HIGH_DEBTINC_FLAG": 0,
+  "HAS_DEROG": 0
+}
+
+########################
+#####  LOW RISK   ######
+########################
+
+{
+  "LOAN": 10000,
+  "MORTDUE": 100000,
+  "VALUE": 200000,
+  "REASON": "HomeImp",
+  "JOB": "ProfExe",
+  "YOJ": 15,
+  "DEROG": 0,
+  "DELINQ": 0,
+  "CLAGE": 320,
+  "NINQ": 0,
+  "CLNO": 35,
+  "DEBTINC": 22,
+  "COLLATERAL": 100000,
+  "L_P_RATIO": 0.05,
+  "L_C_RATIO": 0.1,
+  "C_P_RATIO": 0.5,
+  "HIGH_DEBTINC_FLAG": 0,
+  "HAS_DEROG": 0
+}
+
+
+########################
+#####OTHER USECASE######
+########################
+
+{
+  "LOAN": 60000,
+  "MORTDUE": 55000,
+  "VALUE": 50000,
+  "REASON": "DebtCon",
+  "JOB": "Other",
+  "YOJ": 2,
+  "DEROG": 0,
+  "DELINQ": 0,
+  "CLAGE": 100,
+  "NINQ": 1,
+  "CLNO": 15,
+  "DEBTINC": 40,
+  "COLLATERAL": -5000,
+  "L_P_RATIO": 1.2,
+  "L_C_RATIO": -10.0,
+  "C_P_RATIO": -0.1,
+  "HIGH_DEBTINC_FLAG": 0,
+  "HAS_DEROG": 0
+}

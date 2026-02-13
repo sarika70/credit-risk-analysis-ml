@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RiskEngine Ops | Model Governance</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(229, 231, 235, 0.5);
+        }
+        .nav-aactive {
+            background: rgba(79, 70, 229, 0.1);
+            color: #4f46e5;
+            border-left: 4px solid #4f46e5;
+        }
+        .feature-bar {
+            transition: width 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+    </style>
+</head>
+<body class="bg-slate-50 min-h-screen text-slate-900 font-sans flex">
+
+    <!-- Sidebar Navigation -->
+    <aside class="w-64 bg-white border-r border-slate-200 fixed h-full z-20">
+        <div class="p-6 border-b border-slate-100 flex items-center gap-3">
+            <div class="bg-indigo-600 p-2 rounded-lg"><i class="fas fa-shield-halved text-white"></i></div>
+            <h1 class="text-xl font-bold tracking-tight text-slate-800">RiskEngine <span class="text-indigo-600">Ops</span></h1>
+        </div>
+        
+        <nav class="p-4 space-y-2">
+            <button onclick="switchTab('predict')" id="nav-predict" class="nav-btn w-full flex items-center gap-3 p-3 rounded-lg hover:bg-slate-50 transition nav-active">
+                <i class="fas fa-calculator w-5"></i> Real-time Scoring
+            </button>
+            <button onclick="switchTab('monitor')" id="nav-monitor" class="nav-btn w-full flex items-center gap-3 p-3 rounded-lg hover:bg-slate-50 transition text-slate-600">
+                <i class="fas fa-chart-line w-5"></i> Model Monitoring
+            </button>
+            <button onclick="switchTab('eda')" id="nav-eda" class="nav-btn w-full flex items-center gap-3 p-3 rounded-lg hover:bg-slate-50 transition text-slate-600">
+                <i class="fas fa-microscope w-5"></i> EDA Analytics
+            </button>
+        </nav>
+
+        <div class="absolute bottom-0 w-full p-4 border-t border-slate-100">
+            <div class="bg-slate-50 p-3 rounded-lg text-xs text-slate-500">
+                <p class="font-bold text-slate-700">Model Version: v2.5.4</p>
+                <p>Environment: Production</p>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="ml-64 flex-1 p-8">
+        
+        <!-- Tab: Real-time Scoring -->
+        <div id="tab-predict" class="tab-content">
+            <header class="mb-8">
+                <h2 class="text-3xl font-extrabold text-slate-900">RISK Engine-Loan Assessment Dashboard</h2>
+                <p class="text-slate-500">ABC Technology HMEQ Loan Decision Engine</p>
+            </header>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div class="lg:col-span-2">
+                    <form id="riskForm" class="glass-card rounded-2xl p-8 shadow-sm grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="col-span-full border-b pb-2">
+                            <h3 class="font-bold text-indigo-600 flex items-center gap-2">
+                                <i class="fas fa-user-tie"></i> Applicant Financials
+                            </h3>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold mb-1">Loan Amount ($)</label>
+                            <input type="number" name="LOAN" value="15000" class="w-full p-2.5 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold mb-1">Mortgage Due ($)</label>
+                            <input type="number" name="MORTDUE" value="60000" class="w-full p-2.5 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold mb-1">Property Value ($)</label>
+                            <input type="number" name="VALUE" value="100000" class="w-full p-2.5 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold mb-1">Debt-to-Income (%)</label>
+                            <input type="number" name="DEBTINC" value="25" step="0.1" class="w-full p-2.5 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none" required>
+                        </div>
+
+                        <div class="col-span-full border-b pb-2 mt-4">
+                            <h3 class="font-bold text-indigo-600 flex items-center gap-2">
+                                <i class="fas fa-history"></i> Credit History & Risk
+                            </h3>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold mb-1">Years at Job</label>
+                            <input type="number" name="YOJ" value="10" step="0.5" class="w-full p-2.5 border rounded-lg focus:ring-2 focus:ring-indigo-500">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold mb-1">Delinquent Lines (DELINQ)</label>
+                            <input type="number" name="DELINQ" value="0" class="w-full p-2.5 border rounded-lg focus:ring-2 focus:ring-indigo-500">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold mb-1">Derogatory Reports (DEROG)</label>
+                            <input type="number" name="DEROG" value="0" class="w-full p-2.5 border rounded-lg focus:ring-2 focus:ring-indigo-500" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold mb-1">Recent Inquiries (NINQ)</label>
+                            <input type="number" name="NINQ" value="0" class="w-full p-2.5 border rounded-lg focus:ring-2 focus:ring-indigo-500" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold mb-1">Oldest Line (Months)</label>
+                            <input type="number" name="CLAGE" value="250" class="w-full p-2.5 border rounded-lg focus:ring-2 focus:ring-indigo-500">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold mb-1">Total Credit Lines</label>
+                            <input type="number" name="CLNO" value="25" class="w-full p-2.5 border rounded-lg focus:ring-2 focus:ring-indigo-500">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold mb-1">Job Category</label>
+                            <select name="JOB" class="w-full p-2.5 border rounded-lg bg-white">
+                                <option value="Office">Office</option>
+                                <option value="Sales">Sales</option>
+                                <option value="Mgr">Manager</option>
+                                <option value="ProfExe">Professional</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold mb-1">Reason</label>
+                            <select name="REASON" class="w-full p-2.5 border rounded-lg bg-white">
+                                <option value="HomeImp">Home Improvement</option>
+                                <option value="DebtCon">Debt Consolidation</option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="col-span-full mt-4 bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-4 rounded-xl transition-all shadow-lg active:scale-95">
+                            Run Risk Assessment
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Results -->
+                <div class="space-y-6">
+                    <div id="resultCard" class="hidden glass-card rounded-2xl p-8 shadow-sm border-t-8 transition-all">
+                        <h3 class="text-xs font-bold uppercase tracking-widest text-slate-500 mb-2">Decision</h3>
+                        <div id="decision" class="text-3xl font-black mb-4 tracking-tight">--</div>
+                        
+                        <div class="flex justify-between items-end mb-6">
+                            <div>
+                                <p class="text-sm text-slate-500">Credit Score</p>
+                                <p id="score" class="text-5xl font-mono font-bold text-slate-800">--</p>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-sm text-slate-500">PD (%)</p>
+                                <p id="pd" class="text-xl font-bold text-slate-700">--</p>
+                            </div>
+                        </div>
+
+                        <div class="bg-slate-50 rounded-lg p-4 mb-4 border border-slate-100">
+                            <p class="text-xs font-bold text-slate-400 uppercase mb-2">Model Reasoning</p>
+                            <p id="explanation" class="text-sm leading-relaxed text-slate-600 italic">--</p>
+                        </div>
+
+                        <div id="featureImportanceSection" class="hidden space-y-3">
+                            <p class="text-xs font-bold text-slate-400 uppercase">Top Risk Drivers</p>
+                            <div id="featureImportanceList" class="space-y-2 text-xs">
+                                <!-- Dynamic List -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="loading" class="hidden text-center p-12">
+                        <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-indigo-600 mx-auto"></div>
+                        <p class="mt-4 text-slate-500 font-medium">Computing inference...</p>
+                    </div>
+
+                    <div id="errorBox" class="hidden p-6 bg-red-50 text-red-700 rounded-xl border border-red-200 text-sm shadow-sm">
+                        <div class="flex items-start gap-3">
+                            <i class="fas fa-triangle-exclamation mt-1"></i>
+                            <div>
+                                <p class="font-bold mb-1">System Diagnostic Alert</p>
+                                <p id="errorMessage" class="opacity-90 font-mono text-[11px] leading-relaxed">System Error</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab: Model Monitoring -->
+        <div id="tab-monitor" class="tab-content hidden">
+            <header class="flex justify-between items-center mb-8">
+                <div>
+                    <h2 class="text-3xl font-extrabold text-slate-900">Drift Monitoring</h2>
+                    <p class="text-slate-500">Comparing production inputs vs training baseline</p>
+                </div>
+                <button onclick="runDriftAudit()" class="bg-indigo-600 text-white px-6 py-2 rounded-lg font-bold hover:bg-indigo-700 transition">
+                    <i class="fas fa-sync-alt mr-2"></i> Run Stats Audit
+                </button>
+            </header>
+
+            <div id="driftResults" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="md:col-span-3 text-center py-20 bg-white rounded-2xl border-2 border-dashed border-slate-200">
+                    <i class="fas fa-chart-area text-4xl text-slate-300 mb-4"></i>
+                    <p class="text-slate-500">Click "Run Stats Audit" to analyze population stability.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab: EDA -->
+        <div id="tab-eda" class="tab-content hidden">
+            <header class="flex justify-between items-center mb-8">
+                <div>
+                    <h2 class="text-3xl font-extrabold text-slate-900">EDA Reports</h2>
+                    <p class="text-slate-500">Exhaustive statistical analysis of the HMEQ dataset</p>
+                </div>
+                <button onclick="generateEDA()" class="bg-indigo-600 text-white px-6 py-2 rounded-lg font-bold hover:bg-indigo-700 transition">
+                    <i class="fas fa-magic mr-2"></i> Generate Report
+                </button>
+            </header>
+
+            <div id="edaContainer" class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 min-h-[500px] flex items-center justify-center">
+                <div class="text-center">
+                    <i class="fas fa-file-waveform text-4xl text-slate-300 mb-4"></i>
+                    <p class="text-slate-500">Generate report to visualize distributions and correlations.</p>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.getElementById('tab-' + tabId).classList.remove('hidden');
+            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('nav-active', 'text-indigo-600'));
+            document.getElementById('nav-' + tabId).classList.add('nav-active');
+        }
+
+        document.getElementById('riskForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData);
+            
+            // Clean payload: ensure strictly single values for prediction
+            const payload = {};
+            for (let [key, val] of Object.entries(data)) {
+                if (['JOB', 'REASON'].includes(key)) {
+                    payload[key] = val;
+                } else {
+                    payload[key] = val === '' ? 0 : parseFloat(val);
+                }
+            }
+
+            const resultCard = document.getElementById('resultCard');
+            const loading = document.getElementById('loading');
+            const errorBox = document.getElementById('errorBox');
+            const impSection = document.getElementById('featureImportanceSection');
+            const impList = document.getElementById('featureImportanceList');
+            
+            resultCard.classList.add('hidden');
+            errorBox.classList.add('hidden');
+            loading.classList.remove('hidden');
+
+            try {
+                const response = await fetch('/predict', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                
+                const result = await response.json();
+
+                if (!response.ok) {
+                    const errorMsg = result.error || result.message || `Server Error ${response.status}`;
+                    throw new Error(errorMsg);
+                }
+                
+                loading.classList.add('hidden');
+                resultCard.classList.remove('hidden');
+                
+                const decision = result.decision || "N/A";
+                const color = result.theme_color || result.color || "#4f46e5";
+                
+                document.getElementById('decision').innerText = decision;
+                document.getElementById('decision').style.color = color;
+                resultCard.style.borderColor = color;
+                
+                document.getElementById('score').innerText = result.credit_score || '---';
+                
+                const rawPd = result.probability_of_default ?? result.pd;
+                document.getElementById('pd').innerText = rawPd !== undefined ? (rawPd * 100).toFixed(2) + '%' : '0.00%';
+                
+                document.getElementById('explanation').innerText = result.explanation || result.reason || 'Prediction processed successfully.';
+
+                const shap = result.feature_importance || result.shap_values;
+                if (shap && Array.isArray(shap)) {
+                    impSection.classList.remove('hidden');
+                    // Ensure we handle the SHAP list safely
+                    impList.innerHTML = shap.slice(0, 10).map(f => {
+                        const val = (f.importance || f.value || 0);
+                        return `
+                        <div class="flex items-center gap-2">
+                            <span class="w-16 font-bold text-slate-500 uppercase overflow-hidden text-ellipsis whitespace-nowrap" title="${f.name}">${f.name || 'Feature'}</span>
+                            <div class="flex-1 h-1.5 bg-slate-100 rounded-full overflow-hidden">
+                                <div class="bg-indigo-500 h-full feature-bar" style="width: ${Math.min(100, Math.abs(val) * 10)}%"></div>
+                            </div>
+                            <span class="text-slate-400 tabular-nums">${val.toFixed(3)}</span>
+                        </div>
+                    `}).join('');
+                } else {
+                    impSection.classList.add('hidden');
+                }
+
+            } catch (err) {
+                loading.classList.add('hidden');
+                errorBox.classList.remove('hidden');
+                
+                // Logic to handle the specific SHAP Index Error reported
+                if (err.message.includes('Length of values') || err.message.includes('index')) {
+                    document.getElementById('errorMessage').innerHTML = `
+                        <span class="font-bold">SHAP Dimension Mismatch (26 vs 52):</span><br/>
+                        The explainer is receiving an expanded feature set (likely due to unexpected encoding logic in the backend). 
+                        Please ensure the backend preprocessor matches the SHAP explainer baseline.
+                    `;
+                } else {
+                    document.getElementById('errorMessage').innerText = err.message;
+                }
+            }
+        });
+
+        async function runDriftAudit() {
+            const container = document.getElementById('driftResults');
+            container.innerHTML = '<div class="col-span-3 text-center py-20"><div class="animate-spin rounded-full h-10 w-10 border-b-2 border-indigo-600 mx-auto"></div></div>';
+            
+            const fetchWithRetry = async (url, options, retries = 3, delay = 1000) => {
+                try {
+                    const res = await fetch(url, options);
+                    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                    return await res.json();
+                } catch (err) {
+                    if (retries === 0) throw err;
+                    await new Promise(resolve => setTimeout(resolve, delay));
+                    return fetchWithRetry(url, options, retries - 1, delay * 2);
+                }
+            };
+
+            try {
+                const data = await fetchWithRetry('/api/drift-report', { method: 'GET' });
+                
+                const psi = data.metrics?.score_drift_psi || 0.00;
+                const status = psi > 0.2 ? 'Critical' : (psi > 0.1 ? 'Warning' : 'Stable');
+                const colorClass = psi > 0.2 ? 'text-red-600' : (psi > 0.1 ? 'text-amber-500' : 'text-emerald-500');
+
+                container.innerHTML = `
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                        <h4 class="text-xs font-bold text-slate-400 uppercase mb-4">Model PSI (Drift)</h4>
+                        <p class="text-4xl font-black ${colorClass}">${psi.toFixed(4)}</p>
+                        <p class="mt-2 text-sm text-slate-500">Status: <span class="font-bold capitalize">${status}</span></p>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                        <h4 class="text-xs font-bold text-slate-400 uppercase mb-4">Samples Logged</h4>
+                        <p class="text-4xl font-black text-slate-800">${data.population_size || 0}</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                        <h4 class="text-xs font-bold text-slate-400 uppercase mb-4">Feature Integrity</h4>
+                        <p class="text-4xl font-black text-indigo-600">Healthy</p>
+                    </div>
+                `;
+            } catch (e) {
+                container.innerHTML = `<div class="col-span-3 p-8 bg-red-50 text-red-700 rounded-xl border border-red-100 text-center">
+                    <p class="font-bold">Monitoring Service Temporarily Unavailable</p>
+                    <p class="text-xs mt-1">The drift report engine encountered a persistent 500 error. Please check server logs for dimensionality mismatches.</p>
+                    <button onclick="runDriftAudit()" class="mt-4 px-4 py-2 bg-red-100 rounded-lg text-xs font-bold uppercase tracking-wider">Manual Re-sync</button>
+                </div>`;
+            }
+        }
+
+        async function generateEDA() {
+            const container = document.getElementById('edaContainer');
+            container.innerHTML = '<div class="animate-spin h-10 w-10 border-4 border-indigo-500 border-t-transparent rounded-full"></div>';
+            
+            try {
+                const res = await fetch('/api/eda-report');
+                if (!res.ok) throw new Error();
+                const data = await res.json();
+                const imgSource = data.image.startsWith('data:') ? data.image : `data:image/png;base64,${data.image}`;
+
+                container.innerHTML = `
+                    <div class="w-full">
+                        <img src="${imgSource}" class="max-w-full rounded-xl border border-slate-200 shadow-lg mx-auto">
+                        <div class="mt-6 p-4 bg-indigo-50 rounded-lg text-indigo-700 text-sm">
+                            <i class="fas fa-circle-info mr-2"></i> ${data.summary || 'EDA analysis complete.'}
+                        </div>
+                    </div>
+                `;
+            } catch (e) {
+                container.innerHTML = `<div class="text-center p-8"><p class="text-red-500 font-bold">Failed to fetch EDA data. Resource currently unavailable.</p></div>`;
+            }
+        }
+    </script>
+</body>
+</html>

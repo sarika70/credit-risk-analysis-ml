@@ -1,0 +1,28 @@
+HMEQ Data (CSV / DB)
+        |
+        v
+Feature Engineering (Ratios + Flags)
+        |
+        v
+Preprocessing (Scaling + Encoding)
+        |
+        v
+MODEL FAMILY (Different Models)
+ ├── Tree Models
+ ├── Tree + XGBoost
+ └── Logistic Regression
+        |
+        v
+MLflow Tracking + Model Registry
+        |
+        v
+Saved Artifact (joblib)
+        |
+        v
+Flask REST API
+        |
+        v
+PD → Credit Score → Risk Band → Decision
+        |
+        v
+SHAP Reason Codes (Explainability)

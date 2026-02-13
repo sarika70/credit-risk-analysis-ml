@@ -1,0 +1,22 @@
+artifact_path: file:///D:/Complete_NIT/ArtificialIntelligence/ML_Projects/credit_risk_ml_system/credit_risk_ml_system/mlruns/3/models/m-6ccf7590a4d44ccda013b2ce70a35f82/artifacts
+flavors:
+  python_function:
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.sklearn
+    model_path: model.pkl
+    predict_fn: predict
+    python_version: 3.11.7
+  sklearn:
+    code: null
+    pickled_model: model.pkl
+    serialization_format: cloudpickle
+    sklearn_version: 1.7.1
+mlflow_version: 3.7.0
+model_id: m-6ccf7590a4d44ccda013b2ce70a35f82
+model_size_bytes: 6008589
+model_uuid: m-6ccf7590a4d44ccda013b2ce70a35f82
+prompts: null
+run_id: 90caf71f069b4056ae294799b8264c5c
+utc_time_created: '2026-02-03 14:36:06.346467'
