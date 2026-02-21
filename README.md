@@ -1,13 +1,13 @@
-# 🧠 Credit Risk Prediction System (Machine Learning)
+#  Credit Risk Prediction System (Machine Learning)
 
-## 📌 Project Overview
+##  Project Overview
 
 The Credit Risk Prediction System is a Machine Learning project that predicts whether a loan applicant is a high-risk or low-risk customer based on financial and personal data.
 This project helps financial institutions make better loan approval decisions using data-driven insights.
 
 ---
 
-## 🎯 Objectives
+##  Objectives
 
 * Predict credit risk using machine learning algorithms
 * Perform data preprocessing and feature engineering
@@ -16,7 +16,7 @@ This project helps financial institutions make better loan approval decisions us
 
 ---
 
-## 🛠️ Tech Stack
+##  Tech Stack
 
 * **Programming Language:** Python
 * **Libraries:** Pandas, NumPy, Scikit-learn, Matplotlib, Seaborn
@@ -25,7 +25,7 @@ This project helps financial institutions make better loan approval decisions us
 
 ---
 
-## 📂 Project Structure
+##  Project Structure
 
 ```
 credit_risk_ml_system/
@@ -39,7 +39,7 @@ credit_risk_ml_system/
 
 ---
 
-## 📊 Features
+##  Features
 
 * Data Cleaning & Preprocessing
 * Exploratory Data Analysis (EDA)
@@ -50,7 +50,7 @@ credit_risk_ml_system/
 
 ---
 
-## 📈 Machine Learning Workflow
+##  Machine Learning Workflow
 
 1. Data Collection
 2. Data Preprocessing
@@ -62,7 +62,7 @@ credit_risk_ml_system/
 
 ---
 
-## 🧪 Model Performance
+##  Model Performance
 
 * Accuracy: (Add your model accuracy here)
 * Evaluation Metrics:
@@ -73,7 +73,7 @@ credit_risk_ml_system/
 
 ---
 
-## ▶️ How to Run the Project
+##  How to Run the Project
 
 ### Step 1: Clone the Repository
 
@@ -103,7 +103,7 @@ python main.py
 
 ---
 
-## 📷 Screenshots
+##  Screenshots
 
 * Data Analysis Graphs
 * Model Accuracy Output
@@ -113,7 +113,7 @@ python main.py
 
 ---
 
-## 💼 Real-World Use Case
+##  Real-World Use Case
 
 This system can be used by:
 
@@ -126,7 +126,7 @@ to automatically assess customer credit risk and reduce financial losses.
 
 ---
 
-## 🚀 Future Improvements
+##  Future Improvements
 
 * Deploy using Flask or Streamlit
 * Add a Web Interface
@@ -135,7 +135,7 @@ to automatically assess customer credit risk and reduce financial losses.
 
 ---
 
-## 👩‍💻 Author
+##  Author
 
 **Sarika**
 Aspiring Software Developer & Machine Learning Enthusiast
